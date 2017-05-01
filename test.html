@@ -1,0 +1,73 @@
+<html>
+<head>
+    <title>Hello Websockets</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+
+        var ws = null;
+        var max_rows = 10;
+        function init() {
+            if ("WebSocket" in window) {
+                ws = new WebSocket("ws://localhost:8888/websocket");
+                ws.onopen = function() {
+                    console.log("Connection is opened");
+                }
+                ws.onclose = function() {
+                    console.log("Connection is closed");
+                }
+                ws.onmessage = function(msg) {
+                    var tile_name = JSON.parse(msg.data)['tile_name'];
+                    var user = JSON.parse(msg.data)['user'];
+                    var time = JSON.parse(msg.data)['time'];
+
+                    var table = document.getElementById("the_table");
+                    var new_row = table.insertRow(1);
+                    var tile_name_cell = new_row.insertCell(0);
+                    var user_cell = new_row.insertCell(1);
+                    var time_cell = new_row.insertCell(2);
+
+                    // Add some text to the new cells:
+                    tile_name_cell.innerHTML = tile_name;
+                    user_cell.innerHTML = user;
+                    time_cell.innerHTML = time;
+
+                    var num_rows = table.rows.length;
+                    if (num_rows>max_rows) {
+                        table.deleteRow(num_rows -1);
+                    }
+                }
+            } else {
+                console.log('Your browser doesnt support WebSocket!')
+            }
+        }
+    </script>
+</head>
+<body onload="init();">
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-6">
+                <table id="the_table" class="table">
+                    <thead>
+                        <tr>
+                            <th>Tile Name</th>
+                            <th>User</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-6">
+                <p> Hello there</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

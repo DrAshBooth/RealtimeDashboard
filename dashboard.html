@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Layouts &raquo; Hero Sidebar</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./static/css/keen-dashboards.css">
+
+    <script type="text/javascript">
+
+        var ws = null;
+        var max_rows = 15;
+        function init() {
+            if ("WebSocket" in window) {
+                ws = new WebSocket("ws://localhost:8888/websocket");
+                ws.onopen = function() {
+                    console.log("Connection is opened");
+                }
+                ws.onclose = function() {
+                    console.log("Connection is closed");
+                }
+                ws.onmessage = function(msg) {
+                    var tile_name = JSON.parse(msg.data)['tile_name'];
+                    var user = JSON.parse(msg.data)['user'];
+                    var time = JSON.parse(msg.data)['time'];
+
+                    var table = document.getElementById("the_table");
+                    var new_row = table.insertRow(1);
+                    var tile_name_cell = new_row.insertCell(0);
+                    var user_cell = new_row.insertCell(1);
+                    var time_cell = new_row.insertCell(2);
+
+                    // Add some text to the new cells:
+                    tile_name_cell.innerHTML = tile_name;
+                    user_cell.innerHTML = user;
+                    time_cell.innerHTML = time;
+
+                    var num_rows = table.rows.length;
+                    if (num_rows>max_rows) {
+                        table.deleteRow(num_rows -1);
+                    }
+                }
+            } else {
+                console.log('Your browser doesnt support WebSocket!')
+            }
+        }
+    </script>
+</head>
+<body class="application" onload="init();">
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="navbar-brand" href="./">Hello Websockets</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/test">Test</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            Usage table
+          </div>
+          <div class="chart-stage">
+            <table id="the_table" class="table">
+                <thead>
+                    <tr>
+                        <th>Tile Name</th>
+                        <th>User</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+          </div>
+          <div class="chart-notes">
+            Notes about this chart
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-8">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Cell Title
+              </div>
+              <div class="chart-stage">
+                <img data-src="holder.js/100%x240/white">
+              </div>
+              <div class="chart-notes">
+                Notes about this chart
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Cell Title
+              </div>
+              <div class="chart-stage">
+                <img data-src="holder.js/100%x120/white">
+              </div>
+              <div class="chart-notes">
+                Notes about this chart
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Cell Title
+              </div>
+              <div class="chart-stage">
+                <img data-src="holder.js/100%x120/white">
+              </div>
+              <div class="chart-notes">
+                Notes about this chart
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Cell Title
+              </div>
+              <div class="chart-stage">
+                <img data-src="holder.js/100%x120/white">
+              </div>
+              <div class="chart-notes">
+                Notes about this chart
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Cell Title
+              </div>
+              <div class="chart-stage">
+                <img data-src="holder.js/100%x120/white">
+              </div>
+              <div class="chart-notes">
+                Notes about this chart
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Cell Title
+              </div>
+              <div class="chart-stage">
+                <img data-src="holder.js/100%x120/white">
+              </div>
+              <div class="chart-notes">
+                Notes about this chart
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Cell Title
+              </div>
+              <div class="chart-stage">
+                <img data-src="holder.js/100%x120/white">
+              </div>
+              <div class="chart-notes">
+                Notes about this chart
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    <hr>
+
+    <p class="small text-muted">Built with &#9829; by <a href="https://keen.io">Keen IO</a></p>
+
+  </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="static/js/holder.js"></script>
+    <script>
+        Holder.add_theme("white", { background:"#fff", foreground:"#a7a7a7", size:10 });
+    </script>
+
+    <script type="text/javascript" src="static/js/keen.min.js"></script>
+
+</body>
+</html>
